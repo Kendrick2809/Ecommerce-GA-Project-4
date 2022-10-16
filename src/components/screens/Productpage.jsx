@@ -1,16 +1,31 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Button, Card } from "react-bootstrap";
 import Rating from "../products/Rating";
 import Product from "../products/Product";
-import products from "../../products";
+import axios from "axios";
 
 function Productpage(props) {
 	const params = useParams();
 
 	const productID = params.id;
 
-	const product = products.find((product) => product._id == productID);
+	// const product = products.find((product) => product._id == productID);
+
+	const [product, setProduct] = useState([]);
+
+	useEffect(() => {
+		async function fetchProduct() {
+			const { data } = await axios.get(
+				`${process.env.REACT_APP_BASE_BACKEND_URL}/api/products/${productID}`
+			);
+			setProduct(data);
+		}
+
+		fetchProduct();
+	}, []);
+
 	return (
 		<div>
 			<Link to="/" className="btn btn-light my-3">
@@ -71,8 +86,6 @@ function Productpage(props) {
 					</Card>
 				</Col>
 			</Row>
-
-			{product.name}
 		</div>
 	);
 }
