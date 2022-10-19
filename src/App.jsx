@@ -2,9 +2,8 @@ import { Container } from "react-bootstrap";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Header from "./components/partials/Header.jsx";
 import Footer from "./components/partials/Footer.jsx";
-import Productpage from "./components/screens/Productpage.jsx";
-
-import Homepage from "./components/screens/Homepage.jsx";
+import Productpage from "./components/pages/Productpage.jsx";
+import Homepage from "./components/pages/Homepage.jsx";
 
 function App() {
 	return (
