@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
 	Row,
@@ -12,12 +12,10 @@ import {
 } from "react-bootstrap";
 import Loader from "../../features/Loader";
 import Rating from "../products/Rating";
-import Product from "../products/Product";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useGetProductDetailQuery } from "../../slice/product-detail-api-slice";
 
-function Productpage(props, history) {
+function Productpage() {
 	const [qty, setQty] = useState(1);
 
 	const params = useParams();
