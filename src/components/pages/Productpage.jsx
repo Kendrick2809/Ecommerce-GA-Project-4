@@ -10,7 +10,7 @@ import {
 	Card,
 	Form,
 } from "react-bootstrap";
-import Loader from "../../features/Loader";
+import Loader from "../features/Loader";
 import Rating from "../products/Rating";
 import { useNavigate } from "react-router-dom";
 import { useGetProductDetailQuery } from "../../slice/product-detail-api-slice";

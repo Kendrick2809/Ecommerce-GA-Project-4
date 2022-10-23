@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 import { Row, Col } from "react-bootstrap";
 import Product from "../products/Product";
-import Loader from "../../features/Loader";
+import Loader from "../features/Loader";
 import { useGetProductDataQuery } from "../../slice/product-api-slice";
 
 function Homepage() {

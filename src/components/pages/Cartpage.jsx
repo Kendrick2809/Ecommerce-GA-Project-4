@@ -1,8 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, updateCartQuantity } from "../../slice/cart-api-slice";
+import {
+	addToCart,
+	updateCartQuantity,
+	removeFromCart,
+} from "../../slice/cart-api-slice";
 import queryString from "query-string";
 import {
 	Row,
@@ -11,7 +15,7 @@ import {
 	Image,
 	Form,
 	Button,
-	Cart,
+	Card,
 } from "react-bootstrap";
 import { useGetProductDetailQuery } from "../../slice/product-detail-api-slice";
 
@@ -19,32 +23,34 @@ function Cartpage() {
 	const params = useParams();
 	const productId = params.id;
 	const queryParams = queryString.parse(window.location.search);
-	const qty = queryParams.qty;
-	const [cartItems, setCartItems] = useState();
+	const qty = Number(queryParams.qty);
 
 	const cart = useSelector((state) => state.cart.cartItems);
 	console.log(cart);
 
 	const dispatch = useDispatch();
 
+	//only for add to cart
 	const { data, error, isLoading } = useGetProductDetailQuery(productId);
 
 	useEffect(() => {
-		const cartData = {
-			product: data._id,
-			name: data.name,
-			image: data.image,
-			price: data.price,
-			countInStock: data.countInStock,
-			qty,
-		};
-		setCartItems(cartData);
-		dispatch(addToCart(cartData));
+		if (data) {
+			const cartData = {
+				product: data._id,
+				name: data.name,
+				image: data.image,
+				price: data.price,
+				countInStock: data.countInStock,
+				qty,
+			};
+			dispatch(addToCart(cartData));
+		}
 	}, [data]);
 
-	const updateQuantity = (e) => {
-		const updatedQuantity = Number(e.target.value);
-		console.log(updatedQuantity);
+	const navigate = useNavigate();
+
+	const checkoutHandler = () => {
+		navigate("/login?redirect=shipping");
 	};
 
 	return (
@@ -90,51 +96,53 @@ function Cartpage() {
 										</Form.Control>
 									</Col>
 
-									{/* <Col md={1}>
+									<Col md={1}>
 										<Button
 											type="button"
 											variant="light"
-											onClick={() => removeFromCartHandler(item.product)}>
+											onClick={() => dispatch(removeFromCart(item.product))}>
 											<i className="fas fa-trash"></i>
 										</Button>
-									</Col> */}
+									</Col>
 								</Row>
 							</ListGroup.Item>
 						))}
 					</ListGroup>
 				)}
 			</Col>
+
+			<Col md={4}>
+				<Card>
+					<ListGroup variant="flush">
+						<ListGroup.Item>
+							<h2>
+								Subtotal (
+								{cart.reduce((accumulator, item) => accumulator + item.qty, 0)})
+								items
+							</h2>
+							$
+							{cart
+								.reduce(
+									(accumulator, item) => accumulator + item.qty * item.price,
+									0
+								)
+								.toFixed(2)}
+						</ListGroup.Item>
+					</ListGroup>
+
+					<ListGroup.Item>
+						<Button
+							type="button"
+							className="btn-block"
+							disabled={cart.length === 0}
+							onClick={checkoutHandler}>
+							Proceed To Checkout
+						</Button>
+					</ListGroup.Item>
+				</Card>
+			</Col>
 		</Row>
 	);
 }
 
 export default Cartpage;
-
-// const { data, error, isLoading } = useGetProductDetailQuery(productID);
-// const [cartItems, setCartItems] = useState([]);
-// let oldData = JSON.parse(localStorage.getItem("cartItems"));
-
-// console.log(oldData);
-
-// useEffect(() => {
-// 	if (error) {
-// 		console.log(error);
-// 	} else if (isLoading) {
-// 		console.log("Loading...");
-// 	} else {
-// 		const cartData = {
-// 			product: data._id,
-// 			name: data.name,
-// 			image: data.image,
-// 			price: data.price,
-// 			countInStock: data.countInStock,
-// 			productQuantity,
-// 		};
-
-// 		setCartItems([...cartItems, cartData]);
-// 	}
-// }, []);
-
-// localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-// console.log(cartItems);
