@@ -50,7 +50,7 @@ function Cartpage() {
 	const navigate = useNavigate();
 
 	const checkoutHandler = () => {
-		navigate("/login?redirect=shipping");
+		navigate("/shipping");
 	};
 
 	return (
@@ -74,7 +74,12 @@ function Cartpage() {
 										<Link to={`/product/${item.product}`}>{item.name}</Link>
 									</Col>
 
-									<Col md={2}>${item.price}</Col>
+									<Col md={2}>
+										<Row>${item.price}</Row>
+										<Row style={{ fontSize: "0.8rem" }}>
+											{item.countInStock} left in stock
+										</Row>
+									</Col>
 
 									<Col md={3}>
 										<Form.Control

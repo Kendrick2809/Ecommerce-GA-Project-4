@@ -8,13 +8,18 @@ import { getCartData } from "../actions/cartActions";
 
 // console.log(currentItem);
 
-const items =
+const cartItemsFromStorage =
 	localStorage.getItem("cartItems") != null
 		? JSON.parse(localStorage.getItem("cartItems"))
 		: [];
 
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
+	? JSON.parse(localStorage.getItem("shippingAddress"))
+	: {};
+
 const initialState = {
-	cartItems: items,
+	cartItems: cartItemsFromStorage,
+	shippingAddress: shippingAddressFromStorage,
 };
 
 export const cartSlice = createSlice({
@@ -59,10 +64,18 @@ export const cartSlice = createSlice({
 
 			localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
 		},
+		saveShippingAddress: (state, action) => {
+			state.shippingAddress = action.payload;
+			localStorage.setItem("shippingAddress", JSON.stringify(action.payload));
+		},
 	},
 });
 
-export const { addToCart, updateCartQuantity, removeFromCart } =
-	cartSlice.actions;
+export const {
+	addToCart,
+	updateCartQuantity,
+	removeFromCart,
+	saveShippingAddress,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -6,8 +6,10 @@ import Productpage from "./components/pages/Productpage.jsx";
 import Homepage from "./components/pages/Homepage.jsx";
 import Cartpage from "./components/pages/Cartpage.jsx";
 
-import LoginScreen from "./components/pages/UserLoginPage.jsx";
-import RegisterScreen from "./components/pages/UserRegisterPage.jsx";
+import LoginPage from "./components/pages/UserLoginPage.jsx";
+import RegisterPage from "./components/pages/UserRegisterPage.jsx";
+import ProfilePage from "./components/pages/ProfilePage.jsx";
+import ShippingPage from "./components/pages/ShippingPage.jsx";
 
 function App() {
 	return (
@@ -20,8 +22,10 @@ function App() {
 						<Route path="/product/:id" element={<Productpage />} />
 						<Route path="/cart/" element={<Cartpage />} />
 						<Route path="/cart/:id" element={<Cartpage />} />
-						<Route path="/login" element={<LoginScreen />} />
-						<Route path="/register" element={<RegisterScreen />} />
+						<Route path="/login" element={<LoginPage />} />
+						<Route path="/register" element={<RegisterPage />} />
+						<Route path="/profile" element={<ProfilePage />} />
+						<Route path="/shipping" element={<ShippingPage />} />
 					</Routes>
 				</Container>
 			</main>

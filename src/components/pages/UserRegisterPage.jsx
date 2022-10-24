@@ -6,14 +6,15 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../features/Loader";
 import FormContainer from "../features/FormContainer";
-import { registerUser } from "../../actions/userActions";
+import { registerUser, userLogin } from "../../actions/userActions";
+import Message from "../features/Message";
 
-const RegisterScreen = () => {
+const RegisterPage = () => {
 	const { loading, userInfo, error, success } = useSelector(
 		(state) => state.user
 	);
 	const dispatch = useDispatch();
-
+	const [message, setMessage] = useState("");
 	const { register, handleSubmit } = useForm();
 
 	const navigate = useNavigate();
@@ -28,7 +29,7 @@ const RegisterScreen = () => {
 	const submitForm = (data) => {
 		// check if passwords match
 		if (data.password !== data.confirmPassword) {
-			alert("Password mismatch");
+			setMessage("Password mismatch");
 			return;
 		}
 		// transform email string to lowercase to avoid case sensitivity issues during login
@@ -36,47 +37,59 @@ const RegisterScreen = () => {
 		dispatch(registerUser(data));
 	};
 	return (
-		<form onSubmit={handleSubmit(submitForm)}>
-			<div className="form-group">
-				<label htmlFor="name">First Name</label>
-				<input
-					type="text"
-					className="form-input"
-					{...register("name")}
-					required
-				/>
-			</div>
-			<div className="form-group">
-				<label htmlFor="email">Email</label>
-				<input
-					type="email"
-					className="form-input"
-					{...register("email")}
-					required
-				/>
-			</div>
-			<div className="form-group">
-				<label htmlFor="password">Password</label>
-				<input
-					type="password"
-					className="form-input"
-					{...register("password")}
-					required
-				/>
-			</div>
-			<div className="form-group">
-				<label htmlFor="email">Confirm Password</label>
-				<input
-					type="password"
-					className="form-input"
-					{...register("confirmPassword")}
-					required
-				/>
-			</div>
-			<button type="submit" className="button" disabled={loading}>
-				Register
-			</button>
-		</form>
+		<FormContainer>
+			<h1>Register</h1>
+			{message && <Message variant="danger">{message}</Message>}
+			{error && <Message variant="danger">{error}</Message>}
+			{loading && <Loader />}
+
+			<Form onSubmit={handleSubmit(submitForm)}>
+				<Form.Group controlId="name">
+					<Form.Label>Name</Form.Label>
+					<Form.Control
+						type="text"
+						className="form-input"
+						{...register("name")}
+						required
+					/>
+				</Form.Group>
+				<Form.Group controlId="formBasicEmail">
+					<Form.Label>Email Address</Form.Label>
+					<Form.Control
+						type="email"
+						className="form-input"
+						{...register("email")}
+						required
+					/>
+				</Form.Group>
+				<Form.Group controlId="formBasicPassword">
+					<Form.Label>Password</Form.Label>
+					<Form.Control
+						type="password"
+						className="form-input"
+						{...register("password")}
+						required
+					/>
+				</Form.Group>
+				<Form.Group controlId="formBasicPassword">
+					<Form.Label>Confirm Password</Form.Label>
+					<Form.Control
+						type="password"
+						className="form-input"
+						{...register("confirmPassword")}
+						required
+					/>
+				</Form.Group>
+				<Button type="submit" className="button my-3" disabled={loading}>
+					Register
+				</Button>
+			</Form>
+			<Row className="py-3">
+				<Col>
+					Have an Account? <Link to={`/login`}>Sign In</Link>
+				</Col>
+			</Row>
+		</FormContainer>
 	);
 };
-export default RegisterScreen;
+export default RegisterPage;

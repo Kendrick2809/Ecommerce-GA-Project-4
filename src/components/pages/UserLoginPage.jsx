@@ -9,7 +9,7 @@ import Loader from "../features/Loader";
 import Message from "../features/Message";
 import FormContainer from "../features/FormContainer";
 
-const LoginScreen = () => {
+const LoginPage = () => {
 	const { loading, userInfo, error } = useSelector((state) => state.user);
 	console.log(userInfo);
 
@@ -34,13 +34,14 @@ const LoginScreen = () => {
 			<h1>Sign In</h1>
 			{error && <Message variant="danger">{error}</Message>}
 			{loading && <Loader />}
+
 			<Form onSubmit={handleSubmit(submitForm)}>
 				<Form.Group controlId="formBasicEmail">
 					<Form.Label>Email Address</Form.Label>
 					<Form.Control
 						type="email"
 						className="form-input"
-						{...register("username")}
+						{...register("email")}
 						required
 					/>
 				</Form.Group>
@@ -55,11 +56,16 @@ const LoginScreen = () => {
 					/>
 				</Form.Group>
 
-				<Button type="submit" className="button" disabled={loading}>
+				<Button type="submit" className="button my-3" disabled={loading}>
 					Login
 				</Button>
 			</Form>
+			<Row className="py-3">
+				<Col>
+					New Customer? <Link to={`/register`}>Register</Link>
+				</Col>
+			</Row>
 		</FormContainer>
 	);
 };
-export default LoginScreen;
+export default LoginPage;

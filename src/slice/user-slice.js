@@ -3,6 +3,7 @@ import {
 	getUserDetails,
 	registerUser,
 	userLogin,
+	updateUserProfile,
 } from "../actions/userActions";
 
 const userInfo = localStorage.getItem("userInfo")
@@ -13,6 +14,8 @@ const initialState = {
 	loading: false,
 	userInfo: userInfo, // for user object
 	userToken: null, // for storing the JWT
+	userDetail: null,
+	userUpdateProfile: null,
 	error: null,
 	success: false, // for monitoring the registration process.
 };
@@ -23,6 +26,8 @@ const userSlice = createSlice({
 	reducers: {
 		userLogout: (state, action) => {
 			localStorage.removeItem("userInfo");
+			state.userInfo = null;
+			state.userToken = null;
 		},
 	},
 	extraReducers: {
@@ -34,7 +39,9 @@ const userSlice = createSlice({
 		[registerUser.fulfilled]: (state, { payload }) => {
 			state.loading = false;
 			state.success = true;
-			state.userInfo = payload; // registration successful
+			state.userInfo = payload;
+			state.userToken = payload.token;
+			// registration successful
 		},
 		[registerUser.rejected]: (state, { payload }) => {
 			state.loading = false;
@@ -59,10 +66,18 @@ const userSlice = createSlice({
 		},
 		[getUserDetails.fulfilled]: (state, { payload }) => {
 			state.loading = false;
-			state.userInfo = payload;
+			state.userDetail = payload;
 		},
 		[getUserDetails.rejected]: (state, { payload }) => {
 			state.loading = false;
+			state.error = payload;
+		},
+		[updateUserProfile.pending]: (state) => {
+			state.loading = true;
+		},
+		[updateUserProfile.fulfilled]: (state, { payload }) => {
+			state.loading = false;
+			state.userInfo = payload;
 		},
 	},
 });
