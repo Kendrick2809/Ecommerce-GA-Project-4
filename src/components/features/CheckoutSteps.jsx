@@ -8,7 +8,7 @@ function CheckoutSteps({ step1, step2, step3, step4 }) {
 			<Nav.Item>
 				{step1 ? (
 					<LinkContainer to="/login">
-						<Nav.Link>Login</Nav.Link>
+						<Nav.Link>Sign In</Nav.Link>
 					</LinkContainer>
 				) : (
 					<Nav.Link disabled>Login</Nav.Link>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../features/FormContainer";
-import { saveShippingAddress } from "../../slice/cart-api-slice";
+import { saveShippingAddress } from "../../slice/cart-slice";
 import CheckoutSteps from "../features/CheckoutSteps";
 
 function ShippingPage() {

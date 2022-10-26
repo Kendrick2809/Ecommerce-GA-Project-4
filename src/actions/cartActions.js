@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart } from "../slice/cart-api-slice";
+import { addToCart } from "../slice/cart-slice";
 import axios from "axios";
 
 export const getCartData = createAsyncThunk(

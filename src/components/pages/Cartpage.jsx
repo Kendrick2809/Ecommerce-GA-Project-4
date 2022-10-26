@@ -6,7 +6,7 @@ import {
 	addToCart,
 	updateCartQuantity,
 	removeFromCart,
-} from "../../slice/cart-api-slice";
+} from "../../slice/cart-slice";
 import queryString from "query-string";
 import {
 	Row,

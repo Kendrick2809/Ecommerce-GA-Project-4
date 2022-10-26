@@ -10,6 +10,8 @@ import LoginPage from "./components/pages/UserLoginPage.jsx";
 import RegisterPage from "./components/pages/UserRegisterPage.jsx";
 import ProfilePage from "./components/pages/ProfilePage.jsx";
 import ShippingPage from "./components/pages/ShippingPage.jsx";
+import PaymentPage from "./components/pages/PaymentPage.jsx";
+import PlaceOrderPage from "./components/pages/PlaceOrderPage.jsx";
 
 function App() {
 	return (
@@ -26,6 +28,8 @@ function App() {
 						<Route path="/register" element={<RegisterPage />} />
 						<Route path="/profile" element={<ProfilePage />} />
 						<Route path="/shipping" element={<ShippingPage />} />
+						<Route path="/payment" element={<PaymentPage />} />
+						<Route path="/placeorder" element={<PlaceOrderPage />} />
 					</Routes>
 				</Container>
 			</main>
