@@ -17,24 +17,24 @@ function PlaceOrderPage() {
 	const { cartItems, shippingAddress, paymentMethod } = cart;
 
 	const orderCreate = useSelector((state) => state.order);
-	const { loading, error, success, order } = orderCreate;
+	const { loading, error, success, orderDetails } = orderCreate;
 
 	console.log(success);
+	console.log(orderDetails);
 
 	const itemsPrice = cartItems
 		.reduce((acc, item) => acc + item.price * item.qty, 0)
 		.toFixed(2);
-	const shippingPrice = (cart.itemsPrice > 100 ? 0 : 10).toFixed(2);
+	const shippingPrice = (cart.itemsPrice > 100 ? 0 : 3).toFixed(2);
 
 	const totalPrice = (Number(itemsPrice) + Number(shippingPrice)).toFixed(2);
 
 	useEffect(() => {
 		if (success) {
-			navigate(`/order/${order._id}`);
-			dispatch(resetOrder());
+			navigate(`/order/${orderDetails._id}`);
 			dispatch(cartClearItems());
 		}
-	}, [success]);
+	}, [orderDetails]);
 
 	const placeOrder = () => {
 		console.log("place order");

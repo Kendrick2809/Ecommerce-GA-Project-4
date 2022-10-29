@@ -10,6 +10,8 @@ import { userLogout } from "../../slice/user-slice";
 import { useNavigate } from "react-router-dom";
 import Message from "../features/Message";
 import Loader from "../features/Loader";
+import { resetMyOrderState } from "../../slice/my-order-slice";
+import { listMyOrder } from "../../actions/myOrderActions";
 
 function Header() {
 	const { userInfo, userToken, error, loading } = useSelector(
@@ -31,6 +33,11 @@ function Header() {
 		dispatch(userLogout());
 	};
 
+	const resetState = () => {
+		dispatch(resetMyOrderState());
+		dispatch(listMyOrder());
+	};
+
 	return (
 		<header>
 			{error ? (
@@ -43,7 +50,7 @@ function Header() {
 				</>
 			) : (
 				<>
-					<Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
+					<Navbar bg="light" variant="light" expand="lg" collapseOnSelect>
 						<Container>
 							<LinkContainer to="/">
 								<Navbar.Brand>Casper</Navbar.Brand>
@@ -60,7 +67,7 @@ function Header() {
 
 									{userInfo ? (
 										<NavDropdown title={userInfo.name} id="username">
-											<LinkContainer to="/profile">
+											<LinkContainer to="/profile" onClick={resetState}>
 												<NavDropdown.Item>Profile</NavDropdown.Item>
 											</LinkContainer>
 
