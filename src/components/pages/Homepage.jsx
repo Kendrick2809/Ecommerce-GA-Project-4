@@ -13,7 +13,7 @@ function Homepage() {
 
 	return (
 		<div>
-			<h1>Latest Products</h1>
+			<h1>Latest Products (updated)</h1>
 
 			{error ? (
 				<>Oh no, there was an error</>

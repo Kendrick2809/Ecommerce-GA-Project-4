@@ -15,7 +15,7 @@ export const getCartData = createAsyncThunk(
 					"Content-Type": "application/json",
 				},
 			};
-			const requestApi = await axios.get(`/api/products/${productId}`);
+			const requestApi = await axios.get(`/api/products/${productId}/`);
 
 			console.log(requestApi.data._id);
 			const data = {
